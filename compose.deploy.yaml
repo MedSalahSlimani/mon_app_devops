@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/YOUR_USER/YOUR_REPO:latest
+    image: ghcr.io/medsalahslimani/mon_app_devops:901ff145de6d71aebd2128e845aaf47fd7bd07ee
     container_name: application-web
     ports:
       - "5000:5000"

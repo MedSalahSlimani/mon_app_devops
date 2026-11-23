@@ -4,8 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    # Small change made here to trigger the pipeline
-    return {"message": "Application DevOps opérationnelle - Version 2"}
+    return {"message": "Nouvelle version de mon application"}
 
 @app.route("/health")
 def health():
