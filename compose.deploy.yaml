@@ -1,0 +1,7 @@
+services:
+  web:
+    image: ghcr.io/YOUR_USER/YOUR_REPO:latest
+    container_name: application-web
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
