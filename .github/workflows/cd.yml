@@ -1,0 +1,57 @@
+name: DevOps CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  test:
+    name: Tests de l'application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dependances
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executer les tests
+        run: pytest -v
+
+  publish:
+    name: Publier l'image Docker
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Configurer Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Se connecter a GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Construire et publier l'image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
