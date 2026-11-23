@@ -27,8 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Executer les tests
-        run: pytest -v
-
+        run: python -m pytest -v
   publish:
     name: Publier l'image Docker
     needs: test
