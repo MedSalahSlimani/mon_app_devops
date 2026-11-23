@@ -4,7 +4,7 @@ def test_home():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json["message"] == "Application DevOps opérationnelle - Version 2"
+    assert response.json["message"] == "Nouvelle version de mon application"
 
 def test_health():
     client = app.test_client()
